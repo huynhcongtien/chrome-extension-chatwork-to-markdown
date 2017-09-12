@@ -1,0 +1,32 @@
+html, .source, .result {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  padding-bottom: 100px;
+}
+
+.source, .result {
+  border: 1px solid #ddd;
+}
+
+.source {
+  overflow: auto;
+}
+.source textarea {
+  width: 100%;
+  padding: 2px 10px;
+  height: 100%;
+  border: none;
+  resize: none;
+}
+
+.result {
+  padding: 2px 10px;
+  background-color: #fff;
+  overflow: auto;
+}
+.result img {
+  max-width: 30%;
+}

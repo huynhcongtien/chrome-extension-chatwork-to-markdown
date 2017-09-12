@@ -64,7 +64,6 @@
   border: 0 none;
   display: inline;
   line-height: inherit;
-  margin: 0;
   overflow: visible;
   overflow-wrap: normal;
   padding: 0;
@@ -124,6 +123,9 @@
 .chatTimeLineMessageArea .chatTimeLineMessageArea__message .hljs .hljs-params {
   color: #005cc5;
 }
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message .hljs .php .hljs-title {
+  color: #6f42c1;
+}
 .chatTimeLineMessageArea .chatTimeLineMessageArea__message blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;
@@ -178,11 +180,27 @@
   background-color: #fcf8e3;
   font-weight: normal;
 }
-.chatTimeLineMessageArea .chatTimeLineMessageArea__message img {
-  max-width: 35%;
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message img:not(.messageBadge__avatar) {
+  max-width: 20%;
 }
-.chatTimeLineMessageArea .chatTimeLineMessageArea__message img.ui_emoticon {
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message .ui_emoticon {
   height: 20px;
   margin: 0 3px 3px;
   width: 20px;
+}
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+  display: block;
+}
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message dt {
+  font-weight: 700;
+  display: block;
+}
+.chatTimeLineMessageArea .chatTimeLineMessageArea__message dd {
+  display: block;
+  margin-left: 0;
+}
+.chatTimeLineMessageArea p .timelineLinkTrim {
+  vertical-align: middle;
 }

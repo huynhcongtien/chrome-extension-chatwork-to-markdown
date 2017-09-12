@@ -4,32 +4,14 @@ module.exports = function(grunt) {
 
     'use strict';
 
-    var path = require('path');
-
     // configurable paths for the app
     var appConfig = {
-        project: path.basename(__dirname),
-        app: 'app',
-        dist: 'public',
-        build: 'build',
-        debug: {
-            port: 5000
-        }
+        dist: 'app/assets',
+        build: 'app/build',
+        script: 'app/scripts',
+        scss: 'app/scss',
+        compressName: 'archive.zip'
     };
-
-    var deployDate  = "<%= _.slugify(deployDate) %>",
-        deployDir   = {
-            dev: 'deploys/' + deployDate + '/development',
-            pro: 'deploys/' + deployDate + '/production'
-        },
-        deployConfig = {
-            dev: {
-                env: deployDir.dev + '/.env'
-            },
-            pro: {
-                env: deployDir.pro + '/.env'
-            }
-        };
 
     // project configuration
     grunt.initConfig({
@@ -37,84 +19,45 @@ module.exports = function(grunt) {
         // project settings
         theme: appConfig,
 
-        // deploy setting
-        deploy: deployConfig,
-
-        // metadata
-        pkg: grunt.file.readJSON('package.json'),
-        banner: '/*!\n' +
-            ' * <%%= pkg.description %> v<%%= pkg.version %> (<%%= pkg.homepage %>)\n' +
-            ' * Copyright <%%= grunt.template.today("yyyy") %> <%%= pkg.author %>\n' +
-            ' * Licensed under the <%%= pkg.license %> license\n' +
-            ' */\n',
-
         /**
          * Task configuration
          */
         // clean dist folder
         clean: {
-            build: '<%%= theme.build %>',
-            dist: '<%%= theme.dist %>'
+            build: '<%= theme.build %>',
+            dist: '<%= theme.dist %>',
+            compress: '<%= theme.compressName %>'
         },
 
         // copy files and folders
         copy: {
             pro: {
                 files: [
-                    {   // copy .env
-                        expand: true,
-                        flatten: true,
-                        dest: '',
-                        src: '<%%= deploy.pro.env %>'
-                    },
                     {
                         expand: true,
                         flatten: true,
                         cwd: 'node_modules',
-                        dest: '<%%= theme.build %>/css/',
+                        dest: '<%= theme.build %>/css/',
                         src: [
-                            'bootstrap/dist/css/bootstrap.css',
-                            'font-awesome/css/font-awesome.css'
+                            'bootstrap/dist/css/bootstrap.css'
                         ]
                     },
                     {
                         expand: true,
                         flatten: true,
                         cwd: 'node_modules',
-                        dest: '<%%= theme.build %>/js/',
+                        dest: '<%= theme.build %>/js/',
                         src: [
-                            'bootstrap/dist/js/bootstrap.js',
-                            'jquery/dist/jquery.js'
+                            'jquery/jquery.js'
                         ]
                     },
                     {
                         expand: true,
                         flatten: true,
-                        dest: '<%%= theme.dist %>/fonts',
+                        cwd: 'app',
+                        dest: '<%= theme.dist %>/img/',
                         src: [
-                            'node_modules/bootstrap/fonts/*',
-                            'node_modules/font-awesome/fonts/*',
-                            '<%%= theme.app %>/fonts/*'
-                        ]
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        dest: '<%%= theme.dist %>/img',
-                        src: [
-                            '<%%= theme.app %>/img/*'
-                        ]
-                    }
-                ]
-            },
-            dev: {
-                files: [
-                    {   // copy .env
-                        expand: true,
-                        flatten: true,
-                        dest: '',
-                        src: [
-                            '<%%= deploy.dev.env %>'
+                            'images/*'
                         ]
                     }
                 ]
@@ -129,7 +72,9 @@ module.exports = function(grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'app/styles/main.css': 'app/styles/main.scss'
+                    '<%= theme.build %>/css/main.css': '<%= theme.scss %>/main.scss',
+                    '<%= theme.build %>/css/popup.css': '<%= theme.scss %>/popup.scss',
+                    '<%= theme.build %>/css/sample.css': '<%= theme.scss %>/sample.scss'
                 }
             }
         },
@@ -140,7 +85,11 @@ module.exports = function(grunt) {
                 csslintrc: '.csslintrc'
             },
             dist: {
-                src: '<%%= theme.build %>/css/style.css'
+                src: [
+                    '<%= theme.build %>/css/main.css',
+                    '<%= theme.build %>/css/popup.css',
+                    '<%= theme.build %>/css/sample.css'
+                ]
             }
         },
 
@@ -149,19 +98,23 @@ module.exports = function(grunt) {
             options: {
                 keepSpecialComments: 0
             },
-            pro: {
-                dest: '<%%= theme.dist %>/css/core.min.css',
+            main: {
+                dest: '<%= theme.dist %>/css/main.min.css',
                 src: [
-                    '<%%= theme.build %>/css/bootstrap.css',
-                    '<%%= theme.build %>/css/font-awesome.css',
-                    '<%%= theme.build %>/css/style.css'
+                    '<%= theme.build %>/css/main.css'
                 ]
             },
-            dev: {
-                dest: '<%%= theme.dist %>/css/core.min.css',
+            popup: {
+                dest: '<%= theme.dist %>/css/popup.min.css',
                 src: [
-                    '<%%= theme.build %>/css/bootstrap.css',
-                    '<%%= theme.build %>/css/font-awesome.css'
+                    '<%= theme.build %>/css/popup.css'
+                ]
+            },
+            sample: {
+                dest: '<%= theme.dist %>/css/sample.min.css',
+                src: [
+                    '<%= theme.build %>/css/bootstrap.css',
+                    '<%= theme.build %>/css/sample.css'
                 ]
             }
         },
@@ -173,7 +126,9 @@ module.exports = function(grunt) {
             },
             assets: {
                 src: [
-                    '<%%= theme.app %>/js/script.js'
+                    '<%= theme.script %>/contentscript.js',
+                    '<%= theme.script %>/popup.js',
+                    '<%= theme.script %>/sample.js'
                 ]
             }
         },
@@ -181,27 +136,35 @@ module.exports = function(grunt) {
         // minify js files
         uglify: {
             options: {
-                banner: '<%%= banner %>',
                 compress: {
                     warnings: false
                 },
                 report: 'min',
                 mangle: true
             },
-            pro: {
+            main: {
                 files: {
-                    '<%%= theme.dist %>/js/core.min.js': [
-                        '<%%= theme.build %>/js/jquery.js',
-                        '<%%= theme.build %>/js/bootstrap.js',
-                        '<%%= theme.app %>/js/script.js'
+                    '<%= theme.dist %>/js/main.min.js': [
+                        '<%= theme.script %>/jquery-1.8.0.min.js',
+                        '<%= theme.script %>/markdown-it.min.js',
+                        '<%= theme.script %>/contentscript.js'
                     ]
                 }
             },
-            dev: {
+            popup: {
                 files: {
-                    '<%%= theme.dist %>/js/core.min.js': [
-                        '<%%= theme.build %>/js/jquery.js',
-                        '<%%= theme.build %>/js/bootstrap.js'
+                    '<%= theme.dist %>/js/popup.min.js': [
+                        '<%= theme.build %>/js/jquery.js',
+                        '<%= theme.script %>/popup.js'
+                    ]
+                }
+            },
+            sample: {
+                files: {
+                    '<%= theme.dist %>/js/sample.min.js': [
+                        '<%= theme.build %>/js/jquery.js',
+                        '<%= theme.script %>/markdown-it.min.js',
+                        '<%= theme.script %>/sample.js'
                     ]
                 }
             }
@@ -210,7 +173,7 @@ module.exports = function(grunt) {
         // Watch for changes in live edit
         watch: {
             options: {
-                livereload: 14541
+                livereload: 35729
             },
             css: {
                 files: [
@@ -219,23 +182,22 @@ module.exports = function(grunt) {
             },
             sass: {
                 files: [
-                    'app/styles/main.scss'
+                    '<%= theme.scss %>/*.scss'
                 ],
                 options: {
                     livereload: false
                 },
                 tasks: [
-                    'sass'
+                    'sass',
+                    'cssmin'
                 ]
             },
             js: {
                 files: [
-                    '<%= theme.app %>/js/script.js'
-                ]
-            },
-            html: {
-                files: [
-                    'index.php'
+                    '<%= theme.script %>/*.js'
+                ],
+                tasks: [
+                    'uglify'
                 ]
             },
             grunt: {
@@ -246,10 +208,22 @@ module.exports = function(grunt) {
             }
         },
 
-        open: {
-            dev: {
-                path: 'http://localhost/<%%= theme.project %>',
-                app: 'Chrome'
+        compress: {
+            main: {
+                options: {
+                    archive: '<%= theme.compressName %>'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'app/',
+                    src: [
+                        '_locales/**',
+                        'assets/**',
+                        'pages/**',
+                        'manifest.json'
+                    ],
+                    dest: '/'
+                }]
             }
         }
 
@@ -262,37 +236,38 @@ module.exports = function(grunt) {
     require('time-grunt')(grunt);
 
     grunt.registerTask('lint', [
-        'csslint',
+        'compress',
         'jshint'
     ]);
 
-    // register the grunt tasks
-    grunt.registerTask('pro', [
+    grunt.registerTask('build', [
         'clean',
-        'copy:pro',
+        'copy',
         'sass',
-        'cssmin:pro',
-        'uglify:pro'
+        'cssmin',
+        'uglify'
+    ]);
+
+    grunt.registerTask('pro', [
+        'build',
+        'compress'
     ]);
 
     grunt.registerTask('dev', [
-        'clean',
-        'copy:pro',
-        'copy:dev',
-        'cssmin:dev',
-        'sass',
-        'uglify:dev'
-    ]);
-
-    grunt.registerTask('live', [
-        'dev',
-        'open:dev',
+        'build',
         'watch'
     ]);
 
     grunt.registerTask('default', [
-        'pro',
-        'open:dev'
+        'pro'
     ]);
+
+    grunt.registerTask('update_manifest', function () {
+        var manifestFile = 'app/manifest.json';
+        var manifestObject = grunt.file.readJSON(manifestFile);//get file as json object
+        console.log(project);
+
+        grunt.file.write(manifestFile, JSON.stringify(manifestObject, null, 2));//serialize it back to file
+    });
 
 };

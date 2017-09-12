@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "my new chrome extension",
+    "message": "Markdown on Chatwork",
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "My Chrome Extension",
+    "message": "Render Chatwork HTML to Markdown",
     "description": "The description of the application"
   }
 }
