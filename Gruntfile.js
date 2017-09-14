@@ -249,11 +249,13 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('pro', [
+        'update_manifest:0',
         'build',
         'compress'
     ]);
 
     grunt.registerTask('dev', [
+        'update_manifest:1',
         'build',
         'watch'
     ]);
@@ -262,12 +264,25 @@ module.exports = function(grunt) {
         'pro'
     ]);
 
-    grunt.registerTask('update_manifest', function () {
-        var manifestFile = 'app/manifest.json';
-        var manifestObject = grunt.file.readJSON(manifestFile);//get file as json object
-        console.log(project);
+    grunt.registerTask('update_manifest', function (is_not_product) {
+        var manifestFile    = 'app/manifest.json',
+            manifestObject  = grunt.file.readJSON(manifestFile);//get file as json object
 
-        grunt.file.write(manifestFile, JSON.stringify(manifestObject, null, 2));//serialize it back to file
+        manifestObject['background']['scripts'] = [
+            'scripts/background.js'
+        ];
+
+        if (typeof is_not_product === 'undefined') {
+            is_not_product = 1;
+        }
+
+        is_not_product = parseInt(is_not_product);
+
+        if (is_not_product) {
+            manifestObject['background']['scripts'].push('scripts/chromereload.js');
+        }
+
+        grunt.file.write(manifestFile, JSON.stringify(manifestObject, null, 4));//serialize it back to file
     });
 
 };
