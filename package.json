@@ -1,17 +1,18 @@
 {
-  "name": "my-new-chrome-extension",
-  "private": true,
-  "engines": {
-    "node": ">=0.8.0"
+  "name": "chrome-extension-chatwork-to-markdown",
+  "version": "0.0.1",
+  "description": "Render chatwork HTML to markdown",
+  "main": "app/manifest.json",
+   "homepage": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown.git"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "babel-core": "^6.7.2",
-    "babel-preset-es2015": "^6.6.0",
-    "del": "^2.2.0",
     "grunt": "~1.0.1",
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-compress": "^1.4.3",
@@ -22,44 +23,17 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "~1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-open": "^0.2.3",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-cache": "^0.4.3",
-    "gulp-chrome-manifest": "0.0.13",
-    "gulp-clean-css": "^2.0.3",
-    "gulp-eslint": "^2.0.0",
-    "gulp-htmlmin": "^1.3.0",
-    "gulp-if": "^2.0.0",
-    "gulp-imagemin": "^2.4.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-load-plugins": "^1.2.0",
-    "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
-    "gulp-useref": "^3.0.8",
-    "gulp-zip": "^3.2.0",
     "load-grunt-tasks": "^3.5.2",
-    "main-bower-files": "^2.11.1",
-    "node-env-file": "^0.1.8",
-    "run-sequence": "^1.1.5",
-    "time-grunt": "^1.4.0",
-    "wiredep": "^4.0.0"
+    "time-grunt": "^1.4.0"
   },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "browser": true
-    },
-    "globals": {
-      "chrome": true
-    },
-    "rules": {
-      "eol-last": 0,
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
-  }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Huynh Cong Tien",
+    "email": "congtien2705@gmail.com",
+    "url": "https://github.com/huynhcongtien"
+  },
+  "license": "MIT"
 }
