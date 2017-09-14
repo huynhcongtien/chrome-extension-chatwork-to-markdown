@@ -48,7 +48,7 @@ module.exports = function(grunt) {
                         cwd: 'node_modules',
                         dest: '<%= theme.build %>/js/',
                         src: [
-                            'jquery/jquery.js'
+                            'jquery/dist/jquery.js'
                         ]
                     },
                     {
