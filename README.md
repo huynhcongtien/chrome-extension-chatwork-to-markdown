@@ -1,5 +1,3 @@
-![alt tag](https://appdata.chatwork.com/avatar/1311/1311129.rsz.png)
-
 ## Chrome extension render chatwork HTML to markdown
 Using [Markdown-it](https://markdown-it.github.io/markdown-it) for render [chatwork](https://www.chatwork.com) HTML.
 
