@@ -59,7 +59,15 @@ module.exports = function(grunt) {
                         src: [
                             'images/*'
                         ]
-                    }
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        dest: '<%= theme.dist %>/js/',
+                        src: [
+                            '<%= theme.script %>/background.js',
+                        ]
+                    },
                 ]
             }
         },
@@ -197,7 +205,7 @@ module.exports = function(grunt) {
                     '<%= theme.script %>/*.js'
                 ],
                 tasks: [
-                    'uglify'
+                    'uglify:main'
                 ]
             },
             grunt: {
@@ -269,7 +277,7 @@ module.exports = function(grunt) {
             manifestObject  = grunt.file.readJSON(manifestFile);//get file as json object
 
         manifestObject['background']['scripts'] = [
-            'scripts/background.js'
+            'assets/js/background.js'
         ];
 
         if (typeof is_not_product === 'undefined') {
