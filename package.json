@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "Render chatwork HTML to markdown",
   "main": "app/manifest.json",
-   "homepage": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown",
+  "homepage": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown",
   "repository": {
     "type": "git",
     "url": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown.git"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.3",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
@@ -23,6 +23,7 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "~1.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-notify": "^0.4.5",
     "load-grunt-tasks": "^3.5.2",
     "time-grunt": "^1.4.0"
   },

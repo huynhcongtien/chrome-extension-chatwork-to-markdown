@@ -1,5 +1,3 @@
-/* global __dirname */
-
 'use strict';
 
 module.exports = function(grunt) {
@@ -197,7 +195,8 @@ module.exports = function(grunt) {
                 },
                 tasks: [
                     'sass',
-                    'cssmin'
+                    'cssmin',
+                    'notify:watch_sass'
                 ]
             },
             js: {
@@ -205,13 +204,42 @@ module.exports = function(grunt) {
                     '<%= theme.script %>/*.js'
                 ],
                 tasks: [
-                    'uglify:main'
+                    'uglify:main',
+                    'notify:watch_js'
                 ]
             },
             grunt: {
                 files: ['Gruntfile.js'],
                 options: {
                     reload: true
+                }
+            }
+        },
+
+        notify: {
+            watch_sass: {
+                options: {
+                    message: 'SASS finished running' //required
+                }
+            },
+            watch_js  : {
+                options: {
+                    message: 'JS has changed' //required
+                }
+            },
+            watch_html: {
+                options: {
+                    message: 'Reload view completed'
+                }
+            },
+            watch_dev : {
+                options: {
+                    message: 'Dev is ready'
+                }
+            },
+            watch_compress: {
+                options: {
+                    message: 'Compress is completed'
                 }
             }
         },
@@ -238,7 +266,7 @@ module.exports = function(grunt) {
     });
 
     // load the Grunt plugins
-    require('load-grunt-tasks')(grunt);
+    require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
 
     // show grunt task time
     require('time-grunt')(grunt);
@@ -259,12 +287,14 @@ module.exports = function(grunt) {
     grunt.registerTask('pro', [
         'update_manifest:0',
         'build',
-        'compress'
+        'compress',
+        'notify:watch_compress'
     ]);
 
     grunt.registerTask('dev', [
         'update_manifest:1',
         'build',
+        'notify:watch_dev',
         'watch'
     ]);
 
@@ -276,7 +306,7 @@ module.exports = function(grunt) {
         var manifestFile    = 'app/manifest.json',
             manifestObject  = grunt.file.readJSON(manifestFile);//get file as json object
 
-        manifestObject['background']['scripts'] = [
+        manifestObject.background.scripts = [
             'assets/js/background.js'
         ];
 
@@ -287,7 +317,7 @@ module.exports = function(grunt) {
         is_not_product = parseInt(is_not_product);
 
         if (is_not_product) {
-            manifestObject['background']['scripts'].push('scripts/chromereload.js');
+          manifestObject.background.scripts.push('scripts/chromereload.js');
         }
 
         grunt.file.write(manifestFile, JSON.stringify(manifestObject, null, 4));//serialize it back to file

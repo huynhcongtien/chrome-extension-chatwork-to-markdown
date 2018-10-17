@@ -143,17 +143,18 @@ $(function() {
 
                             var msgNew = msgNewArr.join('\n');
 
-//                            var message = msgNew.replace(/&gt;/g, '>');
-//                                message = message.replace(/&lt;/g, '<');
+                           var message = msgNew.replace(/&gt;/g, '>');
+                               message = message.replace(/&lt;/g, '<');
 
-                            var message = messageHtml;
+                            // var message = messageHtml;
 
                             var msgConverted    = convertToMarkdown(message),
                                 msgContentClass = msgContent.attr('class'),
                                 newBox          = '<div class="' + msgContentClass + '">' + msgConverted + '</div>';
 
-                            msgContent.remove();
-                            msgArea.append(newBox);
+                            // msgContent.remove();
+                            msgContent.html(msgConverted);
+                            // msgArea.append(newBox);
                         }
                     }
                 });
