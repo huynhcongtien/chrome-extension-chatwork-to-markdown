@@ -143,10 +143,8 @@ $(function() {
 
                             var msgNew = msgNewArr.join('\n');
 
-//                            var message = msgNew.replace(/&gt;/g, '>');
-//                                message = message.replace(/&lt;/g, '<');
-
-                            var message = messageHtml;
+                            var message = msgNew.replace(/&gt;/g, '>');
+                                message = message.replace(/&lt;/g, '<');
 
                             var msgConverted    = convertToMarkdown(message),
                                 msgContentClass = msgContent.attr('class'),

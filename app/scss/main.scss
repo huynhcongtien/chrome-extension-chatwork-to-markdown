@@ -1,5 +1,5 @@
-.chatTimeLineMessageArea {
-    .chatTimeLineMessageArea__message {
+.timelineMessage__content {
+    .timelineMessage__message {
         line-height: 1.5em;
         ul {
             list-style-type: disc;
@@ -185,7 +185,7 @@
             font-weight: normal;
         }
         img:not(.messageBadge__avatar) {
-            max-width: 20%;
+            max-width: 100%;
         }
         .ui_emoticon {
             height: 20px;

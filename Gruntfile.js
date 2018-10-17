@@ -1,8 +1,8 @@
 /* global __dirname */
 
-module.exports = function(grunt) {
+'use strict';
 
-    'use strict';
+module.exports = function(grunt) {
 
     // configurable paths for the app
     var appConfig = {
