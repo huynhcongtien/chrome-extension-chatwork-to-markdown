@@ -71,19 +71,13 @@ function convertToMarkdown(source) {
 
 $(function() {
 
-    var link    = document.createElement('link');
-    link.href   = chrome.extension.getURL('assets/css/main.min.css');
-    link.type   = 'text/css';
-    link.rel    = 'stylesheet';
-    (document.head || document.documentElement).appendChild(link);
-
     mdInit();
 
     // create an observer instance
     var observer = new MutationObserver(function (mutations) {
-        console.log(mutations);
+        // console.log(mutations);
         mutations.forEach(function (mutation) {
-            console.log(mutation);
+            // console.log(mutation);
             if (mutation.type === 'childList') {
                 $.each(mutation.addedNodes, function(index, node) {
                     if (node.nodeName === 'DIV') {
@@ -94,7 +88,7 @@ $(function() {
                             //var messageText = msgContent.text();
                             var messageHtml = msgContent.html();
 
-                            console.log(messageHtml);
+                            // console.log(messageHtml);
 
                             var msgExtract  = messageHtml.split('\n'),
                                 makeMdLink  = '',
@@ -166,11 +160,11 @@ $(function() {
 
     // configuration of the observer
     var config = {
-        childList: true,
-        attributes: false,
-        characterData: true,
-        subtree: false,
-        attributeOldValue: false,
+        childList            : true,
+        attributes           : false,
+        characterData        : true,
+        subtree              : false,
+        attributeOldValue    : false,
         characterDataOldValue: true
     };
 
@@ -179,7 +173,6 @@ $(function() {
         // select the target node
         var target = $('#root .timeLine');
 
-        console.log($('#root .timeLine'));
         if (!target.length) {
             return;
         }

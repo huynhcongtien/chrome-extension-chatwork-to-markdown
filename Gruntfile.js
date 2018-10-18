@@ -1,14 +1,13 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // configurable paths for the app
     var appConfig = {
-        dist: 'app/assets',
-        build: 'app/build',
-        script: 'app/scripts',
-        scss: 'app/scss',
-        compressName: 'archive.zip'
+        dist            : 'app/assets/dist',
+        build           : 'app/assets/build',
+        src             : 'app/assets/src',
+        compressFileName: 'archive.zip'
     };
 
     // project configuration
@@ -22,9 +21,9 @@ module.exports = function(grunt) {
          */
         // clean dist folder
         clean: {
-            build: '<%= theme.build %>',
-            dist: '<%= theme.dist %>',
-            compress: '<%= theme.compressName %>'
+            build   : '<%= theme.build %>',
+            dist    : '<%= theme.dist %>',
+            compress: '<%= theme.compressFileName %>'
         },
 
         // copy files and folders
@@ -32,40 +31,32 @@ module.exports = function(grunt) {
             pro: {
                 files: [
                     {
-                        expand: true,
+                        expand : true,
                         flatten: true,
-                        cwd: 'node_modules',
-                        dest: '<%= theme.build %>/css/',
-                        src: [
+                        cwd    : 'node_modules',
+                        dest   : '<%= theme.build %>/css/',
+                        src    : [
                             'bootstrap/dist/css/bootstrap.css'
                         ]
                     },
                     {
-                        expand: true,
+                        expand : true,
                         flatten: true,
-                        cwd: 'node_modules',
-                        dest: '<%= theme.build %>/js/',
-                        src: [
+                        cwd    : 'node_modules',
+                        dest   : '<%= theme.build %>/js/',
+                        src    : [
                             'jquery/dist/jquery.js'
                         ]
                     },
                     {
-                        expand: true,
+                        expand : true,
                         flatten: true,
-                        cwd: 'app',
-                        dest: '<%= theme.dist %>/img/',
-                        src: [
-                            'images/*'
+                        cwd    : 'app',
+                        dest   : '<%= theme.dist %>/img/',
+                        src    : [
+                            'assets/src/img/*'
                         ]
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        dest: '<%= theme.dist %>/js/',
-                        src: [
-                            '<%= theme.script %>/background.js',
-                        ]
-                    },
+                    }
                 ]
             }
         },
@@ -75,12 +66,12 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     sourcemap: 'none',
-                    style: 'expanded'
+                    style    : 'expanded'
                 },
-                files: {
-                    '<%= theme.build %>/css/main.css': '<%= theme.scss %>/main.scss',
-                    '<%= theme.build %>/css/popup.css': '<%= theme.scss %>/popup.scss',
-                    '<%= theme.build %>/css/sample.css': '<%= theme.scss %>/sample.scss'
+                files  : {
+                    '<%= theme.build %>/css/main.css'  : '<%= theme.src %>/sass/main.scss',
+                    '<%= theme.build %>/css/popup.css' : '<%= theme.src %>/sass/popup.scss',
+                    '<%= theme.build %>/css/sample.css': '<%= theme.src %>/sass/sample.scss'
                 }
             }
         },
@@ -90,7 +81,7 @@ module.exports = function(grunt) {
             options: {
                 csslintrc: '.csslintrc'
             },
-            dist: {
+            dist   : {
                 src: [
                     '<%= theme.build %>/css/main.css',
                     '<%= theme.build %>/css/popup.css',
@@ -104,21 +95,21 @@ module.exports = function(grunt) {
             options: {
                 keepSpecialComments: 0
             },
-            main: {
+            main   : {
                 dest: '<%= theme.dist %>/css/main.min.css',
-                src: [
+                src : [
                     '<%= theme.build %>/css/main.css'
                 ]
             },
-            popup: {
+            popup  : {
                 dest: '<%= theme.dist %>/css/popup.min.css',
-                src: [
+                src : [
                     '<%= theme.build %>/css/popup.css'
                 ]
             },
-            sample: {
+            sample : {
                 dest: '<%= theme.dist %>/css/sample.min.css',
-                src: [
+                src : [
                     '<%= theme.build %>/css/bootstrap.css',
                     '<%= theme.build %>/css/sample.css'
                 ]
@@ -130,47 +121,93 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            assets: {
+            assets : {
                 src: [
-                    '<%= theme.script %>/contentscript.js',
-                    '<%= theme.script %>/popup.js',
-                    '<%= theme.script %>/sample.js'
+                    '<%= theme.src %>/js/contentscript.js',
+                    '<%= theme.src %>/js/popup.js',
+                    '<%= theme.src %>/js/sample.js'
                 ]
             }
         },
 
         // minify js files
         uglify: {
-            options: {
+            options   : {
                 compress: {
                     warnings: false
                 },
-                report: 'min',
-                mangle: true
+                report  : 'min',
+                mangle  : true
             },
-            main: {
+            // pro    : {
+            //     files: {
+            //         '<%= theme.dist %>/js/main.min.js'      : [
+            //             '<%= theme.src %>/js/jquery-1.8.0.min.js',
+            //             '<%= theme.src %>/js/markdown-it.min.js',
+            //             '<%= theme.src %>/js/contentscript.js'
+            //         ],
+            //         '<%= theme.dist %>/js/popup.min.js'     : [
+            //             '<%= theme.build %>/js/jquery.js',
+            //             '<%= theme.src %>/js/popup.js'
+            //         ],
+            //         '<%= theme.dist %>/js/sample.min.js'    : [
+            //             '<%= theme.build %>/js/jquery.js',
+            //             '<%= theme.src %>/js/markdown-it.min.js',
+            //             '<%= theme.src %>/js/sample.js'
+            //         ],
+            //         '<%= theme.dist %>/js/background.min.js': [
+            //             '<%= theme.src %>/js/background.js'
+            //         ]
+            //     }
+            // },
+            // dev    : {
+            //     files: {
+            //         '<%= theme.dist %>/js/main.min.js'      : [
+            //             '<%= theme.src %>/js/jquery-1.8.0.min.js',
+            //             '<%= theme.src %>/js/markdown-it.min.js'
+            //         ],
+            //         '<%= theme.dist %>/js/popup.min.js'     : [
+            //             '<%= theme.build %>/js/jquery.js'
+            //         ],
+            //         '<%= theme.dist %>/js/sample.min.js'    : [
+            //             '<%= theme.build %>/js/jquery.js',
+            //             '<%= theme.src %>/js/markdown-it.min.js'
+            //         ],
+            //         '<%= theme.dist %>/js/background.min.js': [
+            //             '<%= theme.src %>/js/background.js'
+            //         ]
+            //     }
+            // },
+            main      : {
                 files: {
                     '<%= theme.dist %>/js/main.min.js': [
-                        '<%= theme.script %>/jquery-1.8.0.min.js',
-                        '<%= theme.script %>/markdown-it.min.js',
-                        '<%= theme.script %>/contentscript.js'
+                        '<%= theme.src %>/js/jquery-1.8.0.min.js',
+                        '<%= theme.src %>/js/markdown-it.min.js',
+                        '<%= theme.src %>/js/contentscript.js'
                     ]
                 }
             },
-            popup: {
+            popup     : {
                 files: {
                     '<%= theme.dist %>/js/popup.min.js': [
                         '<%= theme.build %>/js/jquery.js',
-                        '<%= theme.script %>/popup.js'
+                        '<%= theme.src %>/js/popup.js'
                     ]
                 }
             },
-            sample: {
+            sample    : {
                 files: {
                     '<%= theme.dist %>/js/sample.min.js': [
                         '<%= theme.build %>/js/jquery.js',
-                        '<%= theme.script %>/markdown-it.min.js',
-                        '<%= theme.script %>/sample.js'
+                        '<%= theme.src %>/js/markdown-it.min.js',
+                        '<%= theme.src %>/js/sample.js'
+                    ]
+                }
+            },
+            background: {
+                files: {
+                    '<%= theme.dist %>/js/background.min.js': [
+                        '<%= theme.src %>/js/background.js'
                     ]
                 }
             }
@@ -178,38 +215,65 @@ module.exports = function(grunt) {
 
         // Watch for changes in live edit
         watch: {
-            options: {
+            options      : {
                 livereload: 35729
             },
-            css: {
+            css          : {
                 files: [
                     '<%= theme.build %>/css/style.css'
                 ]
             },
-            sass: {
-                files: [
-                    '<%= theme.scss %>/*.scss'
+            sass         : {
+                files  : [
+                    '<%= theme.src %>/sass/*.scss'
                 ],
                 options: {
                     livereload: false
                 },
-                tasks: [
+                tasks  : [
                     'sass',
                     'cssmin',
                     'notify:watch_sass'
                 ]
             },
-            js: {
+            js_main      : {
                 files: [
-                    '<%= theme.script %>/*.js'
+                    '<%= theme.src %>/js/contentscript.js'
                 ],
                 tasks: [
                     'uglify:main',
                     'notify:watch_js'
                 ]
             },
-            grunt: {
-                files: ['Gruntfile.js'],
+            js_popup     : {
+                files: [
+                    '<%= theme.src %>/js/popup.js'
+                ],
+                tasks: [
+                    'uglify:popup',
+                    'notify:watch_js'
+                ]
+            },
+            js_sample    : {
+                files: [
+                    '<%= theme.src %>/js/sample.js'
+                ],
+                tasks: [
+                    'uglify:sample',
+                    'notify:watch_js'
+                ]
+            },
+            js_background: {
+                files: [
+                    '<%= theme.src %>/js/background.js'
+                ],
+                tasks: [
+                    'uglify:background',
+                    'notify:watch_js'
+                ]
+            },
+            grunt        : {
+                files  : ['Gruntfile.js'],
                 options: {
                     reload: true
                 }
@@ -217,22 +281,22 @@ module.exports = function(grunt) {
         },
 
         notify: {
-            watch_sass: {
+            watch_sass    : {
                 options: {
                     message: 'SASS finished running' //required
                 }
             },
-            watch_js  : {
+            watch_js      : {
                 options: {
                     message: 'JS has changed' //required
                 }
             },
-            watch_html: {
+            watch_html    : {
                 options: {
                     message: 'Reload view completed'
                 }
             },
-            watch_dev : {
+            watch_dev     : {
                 options: {
                     message: 'Dev is ready'
                 }
@@ -247,18 +311,18 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: '<%= theme.compressName %>'
+                    archive: '<%= theme.compressFileName %>'
                 },
-                files: [{
+                files  : [{
                     expand: true,
-                    cwd: 'app/',
-                    src: [
+                    cwd   : 'app/',
+                    src   : [
                         '_locales/**',
-                        'assets/**',
+                        'assets/dist/**',
                         'pages/**',
                         'manifest.json'
                     ],
-                    dest: '/'
+                    dest  : '/'
                 }]
             }
         }
@@ -266,7 +330,7 @@ module.exports = function(grunt) {
     });
 
     // load the Grunt plugins
-    require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+    require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
 
     // show grunt task time
     require('time-grunt')(grunt);
@@ -303,11 +367,11 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('update_manifest', function (is_not_product) {
-        var manifestFile    = 'app/manifest.json',
-            manifestObject  = grunt.file.readJSON(manifestFile);//get file as json object
+        var manifestFile   = 'app/manifest.json',
+            manifestObject = grunt.file.readJSON(manifestFile);//get file as json object
 
         manifestObject.background.scripts = [
-            'assets/js/background.js'
+            'assets/dist/js/background.min.js'
         ];
 
         if (typeof is_not_product === 'undefined') {
@@ -317,7 +381,7 @@ module.exports = function(grunt) {
         is_not_product = parseInt(is_not_product);
 
         if (is_not_product) {
-          manifestObject.background.scripts.push('scripts/chromereload.js');
+            manifestObject.background.scripts.push('assets/src/js/chromereload.js');
         }
 
         grunt.file.write(manifestFile, JSON.stringify(manifestObject, null, 4));//serialize it back to file

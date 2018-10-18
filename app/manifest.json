@@ -1,22 +1,21 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
-        "16": "assets/img/icon-16.png",
-        "128": "assets/img/icon-128.png"
+        "16": "assets/dist/img/icon-16.png",
+        "128": "assets/dist/img/icon-128.png"
     },
     "default_locale": "en",
     "background": {
         "scripts": [
-            "assets/js/background.js",
-            "scripts/chromereload.js"
+            "assets/dist/js/background.min.js"
         ]
     },
     "permissions": [
-        "http://*/*",
-        "https://*/*"
+        "tabs",
+        "<all_urls>"
     ],
     "content_scripts": [
         {
@@ -27,7 +26,10 @@
                 "https://www.chatwork.com/*"
             ],
             "js": [
-                "assets/js/main.min.js"
+                "assets/dist/js/main.min.js"
+            ],
+            "css": [
+                "assets/dist/css/main.min.css"
             ],
             "run_at": "document_end",
             "all_frames": false
@@ -35,13 +37,10 @@
     ],
     "browser_action": {
         "default_icon": {
-            "19": "assets/img/icon-19.png",
-            "38": "assets/img/icon-38.png"
+            "19": "assets/dist/img/icon-19.png",
+            "38": "assets/dist/img/icon-38.png"
         },
         "default_title": "Markdown on chatwork",
         "default_popup": "pages/popup.html"
-    },
-    "web_accessible_resources": [
-        "assets/css/main.min.css"
-    ]
+    }
 }

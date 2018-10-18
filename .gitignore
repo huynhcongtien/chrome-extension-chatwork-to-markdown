@@ -4,7 +4,10 @@ temp
 dist
 .sass-cache
 app/bower_components
+app/assets/build
 test/bower_components
 package
+.idea
+archive.zip
 
 /nbproject/
