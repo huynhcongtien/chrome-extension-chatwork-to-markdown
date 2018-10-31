@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-chatwork-to-markdown",
-  "version": "0.0.8",
+  "version": "0.0.3",
   "description": "Render chatwork HTML to markdown",
   "main": "app/manifest.json",
   "homepage": "https://github.com/huynhcongtien/chrome-extension-chatwork-to-markdown",
