@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Changelog
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         sample: {
@@ -11,11 +13,11 @@ module.exports = function(grunt) {
                     '--no-merges',
                     '--date=short'
                 ],
-                template: '{{> features}}',
+                template    : '{{> features}}',
                 featureRegex: /^(.*)$/gim,
-                partials: {
+                partials    : {
                     features: '{{#if features}}{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}\n',
-                    feature: '- {{this}} {{this.date}}\n'
+                    feature : '- {{this}} {{this.date}}\n'
                 }
             }
         }

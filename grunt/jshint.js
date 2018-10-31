@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Validate js files
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         options: {
@@ -14,6 +16,6 @@ module.exports = function(grunt) {
                 '<%= theme.src %>/js/sample.js'
             ]
         }
-    }
+    };
 
 };

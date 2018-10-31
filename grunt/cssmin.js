@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Minify css files
  */
-module.exports = function (grunt) {
+module.exports = function () {
 
     return {
         options: {

@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Watch for changes in live edit
  */
-module.exports = function (grunt) {
+module.exports = function () {
 
     return {
         options      : {

@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Validate css files
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         options: {
@@ -14,6 +16,6 @@ module.exports = function(grunt) {
                 '<%= theme.build %>/css/sample.css'
             ]
         }
-    }
+    };
 
 };

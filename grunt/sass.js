@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Compile sass to css
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         dist: {
@@ -15,6 +17,6 @@ module.exports = function(grunt) {
                 '<%= theme.build %>/css/sample.css': '<%= theme.src %>/sass/sample.scss'
             }
         }
-    }
+    };
 
 };

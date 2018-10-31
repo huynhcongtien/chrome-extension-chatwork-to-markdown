@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Copy files and folders
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         pro: {
@@ -35,6 +37,6 @@ module.exports = function(grunt) {
                 }
             ]
         }
-    }
+    };
 
 };

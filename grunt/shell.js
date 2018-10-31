@@ -1,15 +1,17 @@
+'use strict';
+
 /**
  * Run shell commands by grunt
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         options: {
             stderr: false
         },
-        target: {
+        target : {
             command: version => 'grunt bump::bump-only --setversion=' + version
         }
-    }
+    };
 
 };

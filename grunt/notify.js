@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Automatic Notifications when Grunt tasks running
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         watch_sass    : {
@@ -29,6 +31,6 @@ module.exports = function(grunt) {
                 message: 'Compress is completed'
             }
         }
-    }
+    };
 
 };

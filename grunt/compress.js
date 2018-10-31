@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * Compress files and folders
  */
-module.exports = function(grunt) {
+module.exports = function () {
 
     return {
         main: {
@@ -20,6 +22,6 @@ module.exports = function(grunt) {
                 dest  : '/'
             }]
         }
-    }
+    };
 
 };

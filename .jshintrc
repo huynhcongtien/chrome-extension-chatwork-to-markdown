@@ -27,5 +27,6 @@
     "globals": {
         "hljs": true,
         "chrome": true
-    }
+    },
+    "esversion": 6
 }
