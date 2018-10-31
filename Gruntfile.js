@@ -47,6 +47,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('pro', [
         'update_manifest:0',
+        'prompt',
         'build',
         'compress',
         'notify:watch_compress'
