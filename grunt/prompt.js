@@ -40,6 +40,36 @@ module.exports = function (grunt) {
                         ]
                     },
                     {
+                        config : 'bump.prompt.incrementBuild',
+                        type   : 'list',
+                        message: 'Bump version build:',
+                        choices: [
+                            {
+                                value: 'prepatch',
+                                name : 'Prepatch:  ' + semver.inc(currentVersion, 'prepatch')
+                            },
+                            {
+                                value: 'preminor',
+                                name : 'Preminor:  ' + semver.inc(currentVersion, 'preminor')
+                            },
+                            {
+                                value: 'premajor',
+                                name : 'Premajor:  ' + semver.inc(currentVersion, 'premajor')
+                            },
+                            {
+                                value: 'git',
+                                name : 'Git:  ' + (currentVersion + '-') + 'xxxxx (xxxxx is git commit ID)'
+                            },
+                            {
+                                value: 'prerelease',
+                                name : 'Prerelease:  ' + semver.inc(currentVersion, 'prerelease')
+                            }
+                        ],
+                        when   : function (answers) {
+                            return answers['bump.prompt.increment'] === 'build';
+                        }
+                    },
+                    {
                         config  : 'bump.prompt.version',
                         type    : 'input',
                         message : 'What specific version would you like',
@@ -63,39 +93,61 @@ module.exports = function (grunt) {
                         message: 'What should get the new version:',
                         choices: [
                             {
-                                value  : 'package',
+                                value  : 'package.json',
                                 name   : 'package.json' + (!grunt.file.isFile('package.json') ? ' not found, will create one' : ''),
                                 checked: grunt.file.isFile('package.json')
                             },
                             {
-                                value  : 'bower',
-                                name   : 'bower.json' + (!grunt.file.isFile('bower.json') ? ' not found, will create one' : ''),
-                                checked: grunt.file.isFile('bower.json')
+                                value  : 'app/manifest.json',
+                                name   : 'manifest.json' + (!grunt.file.isFile('app/manifest.json') ? ' not found, will create one' : ''),
+                                checked: grunt.file.isFile('package.json')
                             }
                         ],
+                        default: ['package.json', 'app/manifest.json'],
+                        when   : function (answers) {
+                            return answers['bump.prompt.useDefaults'] === false;
+                        }
+                    },
+                    {
+                        config : 'bump.prompt.isCommit',
+                        type   : 'confirm',
+                        message: 'Do you want to commit?',
+                        default: false,
                         when   : function (answers) {
                             return answers['bump.prompt.useDefaults'] === false;
                         }
                     }
                 ],
                 then     : function (results) {
-                    //console.log(grunt.config('bump'));
-
-                    if (results['bump.prompt.increment'] === 'custom') {
-                        // Run task with custom number
-                        grunt.task.run([
-                            // 'bump-only --setversion=' + results['bump.prompt.version'], // not run -> error
-                            'shell:target:' + results['bump.prompt.version'],
-                            //'changelog',
-                            'bump-commit'
-                        ]);
-                    } else {
-                        grunt.task.run([
-                            'bump-only:' + results['bump.prompt.increment'],
-                            //'changelog',
-                            'bump-commit'
-                        ]);
+                    // resetting options of bump task
+                    if (results['bump.prompt.useDefaults'] === false) {
+                        grunt.config.data.bump.options.files       = results['bump.prompt.files'];
+                        grunt.config.data.bump.options.commitFiles = results['bump.prompt.files'];
+                        grunt.config.data.bump.options.commit      = results['bump.prompt.isCommit'];
                     }
+
+                    switch (results['bump.prompt.increment']) {
+                        case 'custom':
+                            grunt.task.run(
+                                // 'bump-only --setversion=' + results['bump.prompt.version'],
+                                // not run -> error: shell task is instance of bump-only
+                                'shell:bumpVersion:' + results['bump.prompt.version']
+                            );
+                            break;
+
+                        case 'build':
+                            grunt.task.run('bump:' + results['bump.prompt.incrementBuild'] + ':bump-only');
+                            break;
+
+                        default:
+                            grunt.task.run('bump-only:' + results['bump.prompt.increment']);
+                            break;
+                    }
+
+                    grunt.task.run([
+                        //'changelog',
+                        'bump-commit'
+                    ]);
                 }
             }
         }

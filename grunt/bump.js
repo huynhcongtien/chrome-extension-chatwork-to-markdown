@@ -25,7 +25,7 @@ module.exports = function () {
             pushTo            : 'origin',
             gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
             globalReplace     : false,
-            prereleaseName    : false,
+            prereleaseName    : 'rc',
             metadata          : '',
             regExp            : false
         }

@@ -6,11 +6,11 @@
 module.exports = function () {
 
     return {
-        options: {
+        options    : {
             stderr: false
         },
-        target : {
-            command: version => 'grunt bump::bump-only --setversion=' + version
+        bumpVersion: {
+            command: option => 'grunt bump-only --setversion=' + option
         }
     };
 
